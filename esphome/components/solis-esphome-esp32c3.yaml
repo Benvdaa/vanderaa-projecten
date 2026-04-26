@@ -1,1 +1,198 @@
 
+#
+# solis-esphome-esp32c3.yaml -- Ginlong Solis Inverter ESPhome definition for ESP32C3 MCUs.
+#
+# (C) 2023-2024 Hajo Noerenberg
+#
+# Usage:
+#   1. Depending on your type of device (INV, ESINV or EPM),
+#      include modbus definition in 'packages' section below 
+#   2. Compile and upload
+#      https://esphome.io/guides/getting_started_command_line.html#first-uploading
+#
+#
+# http://www.noerenberg.de/
+# https://github.com/hn/ginlong-solis
+#
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 3.0 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
+#
+
+# Updated version for ESP32 C3 mini
+# https://github.com/Benvdaa/ginlong-solis
+
+# Version changes:
+# v 0.0.1 2026-04-12"  Init
+#
+# v 0.0.4 2026-04-22"
+# - Wifi networks added
+
+substitutions:
+  time_timezone: "Europe/Amsterdam"
+  vdate: "v 0.0.4 2026-04-22"
+  device_description: "${friendly_name} gemaakt door van der Aa."
+  name: solis-esphome-esp32c3
+  friendly_name: Ginlong Solis Inverter
+
+
+
+esphome:
+  name: ${name} ## solis-esphome-esp32c3
+  friendly_name: ${friendly_name} ## Ginlong Solis Inverter
+  name_add_mac_suffix: True
+  comment: ${device_description}
+  project: 
+    name: "Ginlong.Solis Inverter Esp32c3 Project"
+    version: "dev" 
+
+# Board
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    #type: arduino
+    type: esp-idf
+
+
+# Enable logging
+logger:
+  #level: DEBUG
+
+# Enable Home Assistant API
+api:
+  id: ha_api
+
+
+
+# Enable OTA
+ota:
+  - platform: esphome  
+
+# Enable Wifi
+
+wifi:
+  min_auth_mode: WPA2
+   #  auth expired errors work around:
+   # The amount of TX power for the WiFi interface from 8.5dB to 20.5dB. Default for ESP8266 is 20dB, 20.5dB might cause unexpected restarts.
+  output_power: 8.5
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    #ssid: "Solis-Esphome-Esp32C3"
+    password: "12345678"
+
+
+# Enable Web Server 
+web_server:
+  port: 80
+  version: 3
+ # local: true
+
+# Enable Time component
+time:
+  - platform: homeassistant
+    id: network_time
+
+# ⬇ Enable SPI RGB Led  #--------------------- ⬇ #
+light:
+  - platform: esp32_rmt_led_strip
+    rgb_order: GRB
+    pin: GPIO7
+    num_leds: 1
+    #rmt_channel: 0
+    chipset: ws2812
+    name: "Status LED"
+    id: "activity_led"
+    default_transition_length: 0.1s 
+    restore_mode: ALWAYS_OFF
+    flash_transition_length: 500ms
+    entity_category: config
+    disabled_by_default: true # intentionally disabled, remove if you know what you are doing
+
+# ⬇ switches to control from HA ⬇ #
+switch:
+  - platform: template
+    name: "Status LED enabled"
+    id: led_enabled
+    icon: mdi:alarm-light-outline
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    entity_category: config
+    disabled_by_default: true # intentionally disabled, remove if you know what you are doing
+
+  
+# ⬇ Script Configuration  ⬇ #
+script:
+  - mode: restart
+    id: modbus_activity
+    then:
+      # e.g. blink led
+
+      
+# ⬇ UART Configuration  ⬇ #
+uart:
+  id: modbus_uart
+  tx_pin: 0   # D6 on di mini
+  rx_pin: 1   # D5 on d1 mini
+  baud_rate: 9600
+
+# ⬇ Modbus Configuration  ⬇ #
+modbus:
+  #flow_control_pin: D7
+  send_wait_time: 300ms
+  id: modbus_hw
+
+modbus_controller:
+  - id: modbus_master
+    address: 0x1
+    modbus_id: modbus_hw
+    setup_priority: -10
+  
+# ⬇ Button Configuration  ⬇ #
+button:
+  - platform: factory_reset
+    name: Restart with factory default settings
+    id: reset_all
+  - platform: restart
+    name: Reboot device
+
+# ⬇ Sensor Configuration  ⬇ #
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    icon: mdi:wifi
+ # ⬇ Uptime informatie sensor ⬇ #
+  - platform: uptime
+    type: seconds         
+    name: Uptime Sensor 
+    
+
+# ⬇ Text Sensor Configuration  ⬇ #
+text_sensor:
+
+  - platform: wifi_info
+    
+    ip_address: 
+      name: Wifi IP-adres
+      icon: mdi:ip-network
+    mac_address:
+      name: Wifi Mac-adres  # 
+      icon: mdi:folder-key-network-outline
+  #  dns_address:
+  #    name: Wifi DNS Address
+  #    icon: mdi:ip-network
+  
+  # ⬇ ESPHome Version information sensor ⬇ #
+  - platform: version
+    name: "ESPHome Version"     
+    hide_timestamp: true 
+    

@@ -1,1 +1,42 @@
 
+
+# Delen en bewerken mag maar laat deze eerste regels staan.
+# Bron : https://www.vanderaa-ict.com
+# Bron File : https://github.com/Benvdaa/vanderaa-projecten/tree/main/esphome
+# © vanderaa-ict.com
+
+
+# ⬇ Substitutions ⬇ #
+substitutions:
+  time_timezone: "Europe/Amsterdam"
+
+# ⬇ Esphome ⬇ #
+esphome:  
+  name: ${name}
+  name_add_mac_suffix: true
+  comment: '${device_description}'
+
+  project:
+    name: "Ginlong.Solis Inverter Esp32c3 Project"
+    version: "${project_version}"
+  min_version: 2025.10.0
+
+# ⬇ ESP32 C3 board⬇ #
+esp32:
+  board: esp32-c3-devkitm-1 
+
+# ⬇ dashboard import ⬇ #
+dashboard_import:
+  package_import_url: github.com/Benvdaa/vanderaa-projecten/esphome/ginlong-solis-inverter-esp32c3.yaml
+
+
+# ⬇ packages ⬇ #
+packages:
+  remote_package:
+    url: https://github.com/Benvdaa/vanderaa-projecten/
+    ref: main
+    files:
+      - esphome/components/solis-esphome-esp32c3.yaml
+      - esphome/components/solis-modbus-inv-copy.yaml
+      
+    refresh: 0d  

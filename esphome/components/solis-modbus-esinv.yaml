@@ -23,6 +23,8 @@
 # with this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
 #
 
+
+# ⬇ Number Configuration  ⬇ #
 number:
   - platform: modbus_controller
     modbus_controller_id: modbus_master
@@ -54,6 +56,7 @@ number:
     min_value: 0
     multiply: 0.01
 
+# ⬇ Binary Sensor Configuration  ⬇ #
 binary_sensor:
   - platform: modbus_controller
     modbus_controller_id: modbus_master
@@ -162,6 +165,7 @@ binary_sensor:
     filters:
       - invert: # modbus returns 0 for charging, 1 for discharging
 
+# ⬇ Sensor Configuration  ⬇ #
 sensor:
   - platform: modbus_controller
     modbus_controller_id: modbus_master
@@ -406,6 +410,7 @@ sensor:
     accuracy_decimals: 2
     filters:
       - multiply: 0.1
+   # ⬇ Total battery charge definition  ⬇ #   
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Battery discharge current limitation
@@ -419,6 +424,7 @@ sensor:
     accuracy_decimals: 2
     filters:
       - multiply: 0.1
+    # ⬇ Total battery charge definition  ⬇ #   
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Household load power
@@ -429,6 +435,7 @@ sensor:
     address: 33147
     value_type: U_WORD
     accuracy_decimals: 0
+   # ⬇ Total battery charge definition  ⬇ #   
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Backup load power
@@ -440,6 +447,7 @@ sensor:
     address: 33148
     value_type: U_WORD
     accuracy_decimals: 0
+   # ⬇ Total battery charge definition  ⬇ #   
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Battery power
@@ -456,6 +464,8 @@ sensor:
         } else {
             return -x;
         }
+
+   # ⬇ Total battery charge definition  ⬇ #        
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Total battery charge
@@ -466,6 +476,8 @@ sensor:
     address: 33161
     value_type: U_DWORD
     skip_updates: 10
+
+   # ⬇ Total battery discharge definition  ⬇ # 
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Total battery discharge
@@ -487,6 +499,8 @@ sensor:
 #   - 33027: Second
 #  To set the clock, write to 43000 in the same format, see https://solis-exporter.readthedocs.io/en/latest/packet_log/
 #  These may also start at 3073, see https://diysolarforum.com/resources/solis-grid-tied-inverters-2018-rs485-modbus-communication-protocol.272/download
+
+   # ⬇ Inverter clock (internal) definition  ⬇ # 
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     id: inverter_clock
@@ -534,7 +548,9 @@ sensor:
 
       return {};
 
+# ⬇ Text Sensor Configuration  ⬇ #
 text_sensor:
+   # ⬇ Product model definition  ⬇ # 
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Product model
@@ -545,6 +561,8 @@ text_sensor:
     entity_category: diagnostic
     icon: mdi:factory
     skip_updates: 10
+    
+   # ⬇ DSP software version definition  ⬇ #     
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: DSP software version
@@ -556,6 +574,8 @@ text_sensor:
     entity_category: diagnostic
     icon: mdi:chip
     skip_updates: 10
+    
+   # ⬇ Country standard code definition  ⬇ # 
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Country standard code
@@ -575,6 +595,8 @@ text_sensor:
         case 0x00B: return std::string("VDE4105");
       }
       return x;
+      
+   # ⬇ Inverter SN definition  ⬇ #     
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Inverter SN
@@ -594,6 +616,8 @@ text_sensor:
       }
       serialnumber[4 * 4] = 0;
       return std::string(serialnumber);
+      
+  # ⬇ Inverter type definition  ⬇ #
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Inverter type definition

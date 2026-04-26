@@ -141,8 +141,8 @@ script:
 # ⬇ UART Configuration  ⬇ #
 uart:
   id: modbus_uart
-  tx_pin: 0   # D6 on di mini
-  rx_pin: 1   # D5 on d1 mini
+  tx_pin: GPIO0   # D6 on di mini
+  rx_pin: GPIO1   # D5 on d1 mini
   baud_rate: 9600
 
 # ⬇ Modbus Configuration  ⬇ #

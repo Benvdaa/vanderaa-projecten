@@ -23,6 +23,8 @@
 # with this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
 #
 
+
+# ⬇ Number Configuration  ⬇ #
 number:
   - platform: modbus_controller
     modbus_controller_id: modbus_master
@@ -40,6 +42,7 @@ number:
     max_value: 110
     multiply: 100
 
+# ⬇ Select Configuration  ⬇ #
 select:
   - platform: modbus_controller
     name: Working Mode
@@ -58,19 +61,23 @@ select:
       "Power-PF": 5
       "Rule21Volt-Watt": 6
 
+# ⬇ Binary Sensor Configuration  ⬇ #
 binary_sensor:
+
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Working status Normal
     register_type: read
     address: 3071 # = 3072 - 1
     bitmask: 0x0001
+    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Working status Initializing
     register_type: read
     address: 3071 # = 3072 - 1
     bitmask: 0x0002
+    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Working status Grid off
@@ -78,6 +85,7 @@ binary_sensor:
     register_type: read
     address: 3071 # = 3072 - 1
     bitmask: 0x0004
+    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Working status Fault to stop
@@ -85,24 +93,28 @@ binary_sensor:
     register_type: read
     address: 3071 # = 3072 - 1
     bitmask: 0x0008
+    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Working status Standby
     register_type: read
     address: 3071 # = 3072 - 1
     bitmask: 0x0010
+    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Working status Derating
     register_type: read
     address: 3071 # = 3072 - 1
     bitmask: 0x0020
+    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Working status Limitating
     register_type: read
     address: 3071 # = 3072 - 1
     bitmask: 0x0040
+    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Working status Grid surge
@@ -110,6 +122,7 @@ binary_sensor:
     register_type: read
     address: 3071 # = 3072 - 1
     bitmask: 0x0100
+    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Working status Fan fault
@@ -117,8 +130,10 @@ binary_sensor:
     register_type: read
     address: 3071 # = 3072 - 1
     bitmask: 0x0200
-
+    
+# ⬇ Sensor Configuration  ⬇ #
 sensor:
+ # ⬇ Active Power definition  ⬇ #
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Active Power
@@ -131,6 +146,7 @@ sensor:
     on_value:
       then:
         - script.execute: modbus_activity
+  # ⬇ Total DC output power definition  ⬇ #       
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Total DC output power
@@ -140,6 +156,7 @@ sensor:
     register_type: read
     address: 3006 # = 3007 - 1
     value_type: U_DWORD
+  # ⬇ Total energy definition  ⬇ #   
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Total energy
@@ -151,6 +168,7 @@ sensor:
     value_type: U_DWORD
     force_new_range: true # workaround to seperate reg 3006: "skip_updates applies for all components in the same range"
     skip_updates: 10
+  # ⬇ Energy this month definition  ⬇ #   
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Energy this month
@@ -161,6 +179,7 @@ sensor:
     address: 3010 # = 3011 - 1
     value_type: U_DWORD
     skip_updates: 10
+  # ⬇ Energy last month definition  ⬇ #   
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Energy last month
@@ -171,6 +190,7 @@ sensor:
     address: 3012 # = 3013 - 1
     value_type: U_DWORD
     skip_updates: 10
+  # ⬇ Energy today definition  ⬇ #   
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Energy today
@@ -184,6 +204,7 @@ sensor:
     filters:
       - multiply: 0.1
     skip_updates: 10
+   # ⬇ Energy last day definition  ⬇ #  
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Energy last day
@@ -197,6 +218,7 @@ sensor:
     filters:
       - multiply: 0.1
     skip_updates: 10
+  # ⬇ DC voltage 1 definition  ⬇ #   
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: DC voltage 1
@@ -209,6 +231,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
+   # ⬇ DC current 1 definition  ⬇ #    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: DC current 1
@@ -221,6 +244,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
+   # ⬇ DC voltage 2 definition  ⬇ #    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: DC voltage 2
@@ -233,6 +257,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
+   # ⬇ DC current 2 definition  ⬇ #    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: DC current 2
@@ -245,6 +270,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
+  # ⬇ AC voltage definition  ⬇ #     
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: AC voltage
@@ -257,6 +283,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
+   # ⬇ Inverter temperature definition  ⬇ #    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Inverter temperature
@@ -269,6 +296,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
+   # ⬇ Grid frequency definition  ⬇ #    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Grid frequency
@@ -282,7 +310,9 @@ sensor:
     filters:
       - multiply: 0.01
 
+# ⬇ Text Sensor Configuration  ⬇ #
 text_sensor:
+ # ⬇ Product model definition  ⬇ #
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Product model
@@ -293,6 +323,7 @@ text_sensor:
     entity_category: diagnostic
     icon: mdi:factory
     skip_updates: 10
+   # ⬇ DSP software version definition  ⬇ #  
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: DSP software version
@@ -304,6 +335,7 @@ text_sensor:
     entity_category: diagnostic
     icon: mdi:chip
     skip_updates: 10
+   # ⬇ LCD software version definition  ⬇ #  
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: LCD software version
@@ -314,6 +346,7 @@ text_sensor:
     entity_category: diagnostic
     icon: mdi:chip
     skip_updates: 10
+   # ⬇ Country standard code definition  ⬇ #  
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Country standard code
@@ -333,6 +366,7 @@ text_sensor:
         case 0x00B: return std::string("VDE4105");
       }
       return x;
+   # ⬇ Inverter SN definition  ⬇ #    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Inverter SN
@@ -351,6 +385,7 @@ text_sensor:
       }
       serialnumber[2 * 8] = 0;
       return std::string(serialnumber);
+   # ⬇ Inverter RTC definition  ⬇ #    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     id: inverter_rtc
@@ -390,6 +425,8 @@ text_sensor:
         ESP_LOGI("SyncInverterRTC", "Inverter RTC not checked because NTP is not yet synchronised");
       }
       return {};
+      
+  # ⬇ Inverter type definition ⬇ #  
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Inverter type definition

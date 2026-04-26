@@ -36,11 +36,15 @@
 #
 # v 0.0.4 2026-04-22"
 # - Wifi networks added
+#
+# v 0.0.5 2026-04-28"
 
 substitutions:
   time_timezone: "Europe/Amsterdam"
-  vdate: "v 0.0.4 2026-04-22"
-  device_description: "${friendly_name} gemaakt door van der Aa."
+  # vdate: "v 0.0.4 2026-04-22"
+  project_version: "0.0.5" # From 22-04-2026 new version
+  date: "28-04-2026"
+  device_description: "${friendly_name} gemaakt door van der Aa versie: ${project_version} - date ${date}."
   name: solis-esphome-esp32c3
   friendly_name: Ginlong Solis Inverter
 
@@ -53,7 +57,7 @@ esphome:
   comment: ${device_description}
   project: 
     name: "Ginlong.Solis Inverter Esp32c3 Project"
-    version: "dev" 
+    version: ${project_version} 
 
 # Board
 esp32:
@@ -89,7 +93,8 @@ wifi:
   ap:
     #ssid: "Solis-Esphome-Esp32C3"
     password: "12345678"
-
+    
+improv_serial:
 
 # Enable Web Server 
 web_server:

@@ -53,7 +53,7 @@ substitutions:
 esphome:
   name: ${name} ## solis-esphome-esp32c3
   friendly_name: ${friendly_name} ## Ginlong Solis Inverter
-  name_add_mac_suffix: False
+  name_add_mac_suffix: true
   comment: ${device_description}
   project: 
     name: "Ginlong.Solis Inverter Esp32c3 Project"

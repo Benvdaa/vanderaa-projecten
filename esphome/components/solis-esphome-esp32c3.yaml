@@ -74,7 +74,7 @@ logger:
 # Enable Home Assistant API
 api:
   id: ha_api
-
+  encryption:   # Uses key set by Home Assistant
 
 
 # Enable OTA

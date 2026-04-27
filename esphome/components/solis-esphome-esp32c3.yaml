@@ -45,7 +45,7 @@ substitutions:
   project_version: "0.0.5" # From 22-04-2026 new version
   date: "28-04-2026"
   device_description: "${friendly_name} gemaakt door van der Aa versie: ${project_version} - date ${date}."
-  name: solis-esphome-esp32c3
+  name: solis-Inverter
   friendly_name: Ginlong Solis Inverter
 
 
@@ -56,7 +56,7 @@ esphome:
   name_add_mac_suffix: true
   comment: ${device_description}
   project: 
-    name: "Ginlong.Solis Inverter Esp32c3 Project"
+    name: "Ginlong.Solis Inverter Project"
     version: ${project_version} 
 
 # Board

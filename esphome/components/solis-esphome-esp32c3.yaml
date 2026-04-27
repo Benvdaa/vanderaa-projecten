@@ -144,7 +144,8 @@ switch:
 #    #  - esphome/components/solis-esphome-esp32c3.yaml
 #      - esphome/components/solis-modbus-inv-copy.yaml
       
-    refresh: 0d  
+#    refresh: 0d  
+
 # ⬇ Script Configuration  ⬇ #
 script:
   - mode: restart

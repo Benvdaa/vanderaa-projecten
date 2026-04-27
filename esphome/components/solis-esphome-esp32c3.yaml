@@ -136,13 +136,13 @@ switch:
     disabled_by_default: true # intentionally disabled, remove if you know what you are doing
 
 # ⬇ packages ⬇ #
-packages:
-  remote_package:
-    url: https://github.com/Benvdaa/vanderaa-projecten/
-    ref: main
-    files:
-    #  - esphome/components/solis-esphome-esp32c3.yaml
-      - esphome/components/solis-modbus-inv-copy.yaml
+#packages:
+#  remote_package:
+#    url: https://github.com/Benvdaa/vanderaa-projecten/
+#    ref: main
+#    files:
+#    #  - esphome/components/solis-esphome-esp32c3.yaml
+#      - esphome/components/solis-modbus-inv-copy.yaml
       
     refresh: 0d  
 # ⬇ Script Configuration  ⬇ #

@@ -45,7 +45,7 @@ substitutions:
   project_version: "0.0.5" # From 22-04-2026 new version
   date: "28-04-2026"
   device_description: "${friendly_name} gemaakt door van der Aa versie: ${project_version} - date ${date}."
-  name: solis-Inverter
+  name: solis-inverter
   friendly_name: Ginlong Solis Inverter
 
 

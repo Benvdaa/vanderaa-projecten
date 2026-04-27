@@ -28,7 +28,7 @@ esp32:
 # ⬇ dashboard import ⬇ #
 dashboard_import:
   package_import_url: github.com/Benvdaa/vanderaa-projecten/esphome/ginlong-solis-inverter-esp32c3.yaml
-
+  import_full_config: True
 
 # ⬇ packages ⬇ #
 packages:

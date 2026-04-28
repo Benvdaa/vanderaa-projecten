@@ -1,1 +1,33 @@
 
+
+
+
+sensor:
+  - platform: sdm_meter
+    phase_a:
+      current:
+        name: "SDM220M Current"
+      voltage:
+        name: "SDM220M Voltage"
+      active_power:
+        name: "SDM220M Power"
+      power_factor:
+        name: "SDM220M Power Factor"
+      apparent_power:
+        name: "SDM220M Apparent Power"
+      reactive_power:
+        name: "SDM220M Reactive Power"
+      phase_angle:
+        name: "SDM220M Phase Angle"
+    frequency:
+      name: "SDM220M Frequency"
+    import_active_energy:
+      name: "SDM220M Import Active Energy"
+    export_active_energy:
+      name: "SDM220M Export Active Energy"
+    import_reactive_energy:
+      name: "SDM220M Import Reactive Energy"
+    export_reactive_energy:
+      name: "SDM220M Export Reactive Energy"
+    update_interval: 60s
+    address: 1

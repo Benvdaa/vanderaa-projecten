@@ -216,6 +216,7 @@ sensor:
 # ⬇ Text Sensor Configuration  ⬇ #
 text_sensor:
 
+  # ⬇ Wifi informatie sensor ⬇ #
   - platform: wifi_info
     
     ip_address: 
@@ -224,9 +225,16 @@ text_sensor:
     mac_address:
       name: Wifi Mac-adres  # 
       icon: mdi:folder-key-network-outline
-  #  dns_address:
-  #    name: Wifi DNS Address
-  #    icon: mdi:ip-network
+   # dns_address:
+   #  name: Wifi DNS Address
+   #  icon: mdi:ip-network
+    ssid:
+      name: Wifi Ssid  # 
+      icon: mdi:folder-key-network-outline
+    bssid:
+      name: Wifi Ssid Mac  # 
+      icon: mdi:folder-key-network-outline
+
   
   # ⬇ ESPHome Version information sensor ⬇ #
   - platform: version

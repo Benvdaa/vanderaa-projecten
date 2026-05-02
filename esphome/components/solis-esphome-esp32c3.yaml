@@ -57,6 +57,7 @@
 # v 0.0.5 2026-04-28"
 # v 0.0.6 2026-05-03"
 # - changed light output.
+# - add adress substitutions 
 
 
 
@@ -69,7 +70,7 @@ substitutions:
   device_description: "${friendly_name} gemaakt door van der Aa versie: ${project_version} - date ${date}."
   name: solis-inverter
   friendly_name: Ginlong Solis Inverter
-
+  solis_modbus_adress: 0x1
 
 
 esphome:
@@ -212,7 +213,7 @@ modbus:
 
 modbus_controller:
   - id: modbus_master
-    address: 0x1
+    address: ${solis_modbus_adress} #0x1
     modbus_id: modbus_hw
     setup_priority: -10
   

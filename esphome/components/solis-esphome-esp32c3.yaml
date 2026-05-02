@@ -31,6 +31,23 @@
 # Updated version for ESP32 C3 mini
 # https://github.com/Benvdaa/ginlong-solis
 
+
+# Lolin Wemos Esp32 C3 Mini board # 
+# HARDWARE: ESP32C3 160MHz, 320KB RAM, 4MB Flash
+# RGB Led GPIO7
+# RGB Colors:
+ # - White:  hex xFFFFFF   | R 100%, G 100%, B 100%  | G 255, R 255, B 255 
+ # - Blue:   hex x3200FF   | R 20% , G 0%  , B 100%  | R 50, G 0, B 250
+ # - Red :   hex xFFFFFF   | R 100%, G 0%  , B 20%   | R 250, G 0, B 50
+ # - Yelow:  hex xFFFFFF   | R 100%, G 100%, B 0%    | R 250, G 250, B 0
+ # - Orange: hex xFFFFFF   | R 100%, G 48% , B 0%    | R 255 , G 115 , B 0
+ # - Green:  hex xFFFFFF   | R 0%  , G 100%, B 20%   | R 0, G 250, B 50
+
+# RS485 - RS232 Board
+ # -Rxd GPIO1
+ # -Txd GPIO0
+
+
 # Version changes:
 # v 0.0.1 2026-04-12"  Init
 #
@@ -40,6 +57,10 @@
 # v 0.0.5 2026-04-28"
 # v 0.0.6 2026-05-03"
 # - changed light output.
+
+
+
+
 substitutions:
   time_timezone: "Europe/Amsterdam"
   # vdate: "v 0.0.4 2026-04-22"

@@ -68,14 +68,15 @@
 substitutions:
   time_timezone: "Europe/Amsterdam"
   # vdate: "v 0.0.4 2026-04-22"
-  project_version: "0.0.2" # From 22-04-2026 new version
+  project_version: "0.0.8" # From 22-04-2026 new version
   date: "09-05-2026"
   device_description: "${friendly_name} gemaakt door van der Aa versie: ${project_version} - date ${date}."
   name: eastron-sdmxx0m
   friendly_name: Eastron SDMxx0M
-  solis_modbus_adress: 0x1  # default modbus_adress 1.
-  solis_modbus_update: 20s  # update_interval default 60 seconds, tested with 20 and 30 sec.
-  eastron_modbus_adress: 0x1  # default modbus_adress 1.
+  ## solis_modbus_adress: 0x1  # default modbus_adress 1.
+  ## solis_modbus_update: 20s  # update_interval default 60 seconds, tested with 20 and 30 sec.
+  eastron_modbus_1_adress: 0x1  # default modbus_adress 1.
+  eastron_modbus_2_adress: 0x2  # default modbus_adress 2.
   eastron_modbus_update: 30s  # update_interval default 60 seconds, tested with 20 and 30 sec.
 
 esphome:
@@ -177,3 +178,100 @@ switch:
     entity_category: config
     disabled_by_default: true # intentionally disabled, remove if you know what you are doing
 
+
+
+# ⬇ Script Configuration  ⬇ #
+script:
+  - mode: restart
+    id: modbus_activity
+    then:
+      # e.g. blink led
+
+      - light.turn_on: 
+          id: activity_led
+          brightness: 80%
+          red: 0%
+          green: 100%
+          blue: 20%  
+          flash_length: 200ms   
+      
+# ⬇ UART Configuration  ⬇ #
+uart:
+  id: modbus_uart
+  tx_pin: GPIO0   # D6 on di mini
+  rx_pin: GPIO1   # D5 on d1 mini
+  baud_rate: 9600
+
+# ⬇ Modbus Configuration  ⬇ #
+modbus:
+  #flow_control_pin: D7
+  send_wait_time: 300ms
+  id: modbus_hw
+
+modbus_controller:
+#  - id: solis_modbus_master
+#    address: ${solis_modbus_adress} #0x1
+#    modbus_id: modbus_hw
+#    setup_priority: -10
+#    update_interval: ${solis_modbus_update} # 20s default 60s  
+
+  # Modbus device 1
+  - id: eastron_modbus_dev_1
+    address: ${eastron_modbus_1_adress} #0x1
+    modbus_id: modbus_hw
+    setup_priority: -10
+    update_interval: ${eastron_modbus_update} # 20s default 60s  
+  # Modbus device 2  
+  - id: eastron_modbus_dev_2
+    address: ${eastron_modbus_2_adress} #0x2
+    modbus_id: modbus_hw
+    setup_priority: -10
+    update_interval: ${eastron_modbus_update} # 20s default 60s  
+        
+# ⬇ Button Configuration  ⬇ #
+button:
+  - platform: factory_reset
+    name: Restart with factory default settings
+    id: reset_all
+  - platform: restart
+    name: Reboot device
+
+# ⬇ Sensor Configuration  ⬇ #
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    icon: mdi:wifi
+ # ⬇ Uptime informatie sensor ⬇ #
+  - platform: uptime
+    type: seconds         
+    name: Uptime Sensor 
+    
+
+# ⬇ Text Sensor Configuration  ⬇ #
+text_sensor:
+
+  # ⬇ Wifi informatie sensor ⬇ #
+  - platform: wifi_info
+    
+    ip_address: 
+      name: Wifi IP-adres
+      icon: mdi:ip-network
+    mac_address:
+      name: Wifi Mac-adres  # 
+      icon: mdi:folder-key-network-outline
+   # dns_address:
+   #  name: Wifi DNS Address
+   #  icon: mdi:ip-network
+    ssid:
+      name: Wifi Ssid  # 
+      icon: mdi:folder-key-network-outline
+    bssid:
+      name: Wifi Ssid Mac  # 
+      icon: mdi:folder-key-network-outline
+
+  
+  # ⬇ ESPHome Version information sensor ⬇ #
+  - platform: version
+    name: "ESPHome Version"     
+    hide_timestamp: true 
+    

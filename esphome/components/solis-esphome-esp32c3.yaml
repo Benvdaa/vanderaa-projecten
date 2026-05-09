@@ -59,14 +59,16 @@
 # - changed light output.
 # - add adress substitutions 
 
+# v 0.0.7 2026-05-09
+# - added Power sensor update_interval: 30s
 
 
 
 substitutions:
   time_timezone: "Europe/Amsterdam"
   # vdate: "v 0.0.4 2026-04-22"
-  project_version: "0.0.6" # From 22-04-2026 new version
-  date: "03-05-2026"
+  project_version: "0.0.7" # From 22-04-2026 new version
+  date: "09-05-2026"
   device_description: "${friendly_name} gemaakt door van der Aa versie: ${project_version} - date ${date}."
   name: solis-inverter
   friendly_name: Ginlong Solis Inverter

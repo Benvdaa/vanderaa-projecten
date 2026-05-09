@@ -62,17 +62,19 @@
 # v 0.0.7 2026-05-09
 # - added Modbus-Controller update_interval: 20s
 
+# v 0.0.8 2026-05-09
 
 
 substitutions:
   time_timezone: "Europe/Amsterdam"
   # vdate: "v 0.0.4 2026-04-22"
-  project_version: "0.0.7" # From 22-04-2026 new version
+  project_version: "0.0.8" # From 22-04-2026 new version
   date: "09-05-2026"
   device_description: "${friendly_name} gemaakt door van der Aa versie: ${project_version} - date ${date}."
   name: solis-inverter
   friendly_name: Ginlong Solis Inverter
-  solis_modbus_adress: 0x1
+  solis_modbus_adress: 0x1  # default modbus_adress 1.
+  solis_modbus_update: 20s  # update_interval default 60 seconds, tested with 20 and 30 sec.
 
 
 esphome:
@@ -218,7 +220,7 @@ modbus_controller:
     address: ${solis_modbus_adress} #0x1
     modbus_id: modbus_hw
     setup_priority: -10
-    update_interval: 20s  
+    update_interval: ${solis_modbus_update} # 20s default 60s  
   
 # ⬇ Button Configuration  ⬇ #
 button:

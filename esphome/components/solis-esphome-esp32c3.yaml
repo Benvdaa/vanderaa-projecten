@@ -60,7 +60,7 @@
 # - add adress substitutions 
 
 # v 0.0.7 2026-05-09
-# - added Modbus-Controller update_interval: 30s
+# - added Modbus-Controller update_interval: 20s
 
 
 
@@ -218,7 +218,7 @@ modbus_controller:
     address: ${solis_modbus_adress} #0x1
     modbus_id: modbus_hw
     setup_priority: -10
-    update_interval: 30s  
+    update_interval: 20s  
   
 # ⬇ Button Configuration  ⬇ #
 button:

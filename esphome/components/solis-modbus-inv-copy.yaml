@@ -23,6 +23,9 @@
 # with this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
 #
 
+# 2026-05-09
+# - added Power sensor update_interval: 30s
+
 number:
   - platform: modbus_controller
     modbus_controller_id: modbus_master
@@ -132,6 +135,7 @@ sensor:
     on_value:
       then:
         - script.execute: modbus_activity
+    update_interval: 30s    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Total DC output power

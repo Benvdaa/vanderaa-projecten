@@ -60,7 +60,7 @@
 # - add adress substitutions 
 
 # v 0.0.7 2026-05-09
-# - added Power sensor update_interval: 30s
+# - added Modbus-Controller update_interval: 30s
 
 
 

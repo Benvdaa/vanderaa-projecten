@@ -1,1 +1,179 @@
 
+#
+# eastron-esphome-esp32c3.yaml -- Eastron SDMxxx Energy ESPhome definition for ESP32C3 MCUs.
+#
+# (C) 2023-2026 Benny van der Aa
+#
+# Usage:
+#   1. Depending on your type of device (SDM630M or SDM220M),
+#      include modbus definition in 'packages' section below 
+#   2. Compile and upload
+#      https://esphome.io/guides/getting_started_command_line.html#first-uploading
+#
+#
+# http://www.vanderaa-ict.com/
+# https://github.com/benvdaa/vanderaa-projecten/
+#
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 3.0 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
+#
+
+# Updated version for ESP32 C3 mini
+# https://github.com/Benvdaa/vanderaa-projecten/
+
+
+# Lolin Wemos Esp32 C3 Mini board # 
+# HARDWARE: ESP32C3 160MHz, 320KB RAM, 4MB Flash
+# RGB Led GPIO7
+# RGB Colors:
+ # - White:  hex xFFFFFF   | R 100%, G 100%, B 100%  | G 255, R 255, B 255 
+ # - Blue:   hex x3200FF   | R 20% , G 0%  , B 100%  | R 50, G 0, B 250
+ # - Red :   hex xFFFFFF   | R 100%, G 0%  , B 20%   | R 250, G 0, B 50
+ # - Yelow:  hex xFFFFFF   | R 100%, G 100%, B 0%    | R 250, G 250, B 0
+ # - Orange: hex xFFFFFF   | R 100%, G 48% , B 0%    | R 255 , G 115 , B 0
+ # - Green:  hex xFFFFFF   | R 0%  , G 100%, B 20%   | R 0, G 250, B 50
+
+# RS485 - RS232 Board
+ # -Rxd GPIO1
+ # -Txd GPIO0
+
+
+# Version changes:
+# v 0.0.1 2026-04-12"  Init
+#
+# v 0.0.4 2026-04-22"
+# - Wifi networks added
+#
+# v 0.0.5 2026-04-28"
+# v 0.0.6 2026-05-03"
+# - changed light output.
+# - add adress substitutions 
+
+# v 0.0.7 2026-05-09
+# - added Modbus-Controller update_interval: 20s
+
+# v 0.0.8 2026-05-09
+
+
+substitutions:
+  time_timezone: "Europe/Amsterdam"
+  # vdate: "v 0.0.4 2026-04-22"
+  project_version: "0.0.2" # From 22-04-2026 new version
+  date: "09-05-2026"
+  device_description: "${friendly_name} gemaakt door van der Aa versie: ${project_version} - date ${date}."
+  name: eastron-sdmxx0m
+  friendly_name: Eastron SDMxx0M
+  solis_modbus_adress: 0x1  # default modbus_adress 1.
+  solis_modbus_update: 20s  # update_interval default 60 seconds, tested with 20 and 30 sec.
+  eastron_modbus_adress: 0x1  # default modbus_adress 1.
+  eastron_modbus_update: 30s  # update_interval default 60 seconds, tested with 20 and 30 sec.
+
+esphome:
+  name: ${name} 
+  friendly_name: ${friendly_name} 
+  name_add_mac_suffix: false
+  comment: ${device_description}
+  project: 
+    name: "Eastron.SDMxx0M modbus Project"
+    version: ${project_version} 
+
+# Board
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    #type: arduino
+    type: esp-idf
+
+
+# Enable logging
+logger:
+  #level: DEBUG
+
+# Enable Home Assistant API
+api:
+  id: ha_api
+  encryption:   # Uses key set by Home Assistant
+  
+  # Api Actions
+  on_client_connected: 
+    then:
+      - light.turn_on: 
+          id: activity_led
+          brightness: 80%
+          red: 20%
+          green: 0%
+          blue: 100%  
+          flash_length: 1500ms     
+
+  on_client_disconnected: 
+    then:
+      
+
+# Enable OTA
+ota:
+  - platform: esphome  
+  #  password: # Uses key set by Home Assistant
+
+# Enable Wifi
+
+wifi:
+  min_auth_mode: WPA2
+   #  auth expired errors work around:
+   # The amount of TX power for the WiFi interface from 8.5dB to 20.5dB. Default for ESP8266 is 20dB, 20.5dB might cause unexpected restarts.
+  output_power: 8.5
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    #ssid: "Solis-Esphome-Esp32C3"
+    password: "12345678"
+    
+improv_serial:
+
+# Enable Web Server 
+web_server:
+  port: 80
+  version: 3
+ # local: true
+
+# Enable Time component
+time:
+  - platform: homeassistant
+    id: network_time
+
+# ⬇ Enable SPI RGB Led  #--------------------- ⬇ #
+light:
+  - platform: esp32_rmt_led_strip
+    rgb_order: GRB
+    pin: GPIO7
+    num_leds: 1
+    #rmt_channel: 0
+    chipset: ws2812
+    name: "Status LED"
+    id: "activity_led"
+    default_transition_length: 0.1s 
+    restore_mode: ALWAYS_OFF
+    flash_transition_length: 100ms
+    entity_category: config
+    disabled_by_default: true # intentionally disabled, remove if you know what you are doing
+
+# ⬇ switches to control from HA ⬇ #
+switch:
+  - platform: template
+    name: "Status LED enabled"
+    id: led_enabled
+    icon: mdi:alarm-light-outline
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    entity_category: config
+    disabled_by_default: true # intentionally disabled, remove if you know what you are doing
+

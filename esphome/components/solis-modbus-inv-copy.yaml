@@ -135,7 +135,7 @@ sensor:
     on_value:
       then:
         - script.execute: modbus_activity
-    update_interval: 30s    
+    ## update_interval: 30s    
   - platform: modbus_controller
     modbus_controller_id: modbus_master
     name: Total DC output power

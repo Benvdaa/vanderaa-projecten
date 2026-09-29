@@ -65,6 +65,7 @@
 # v 0.0.8 2026-05-09
 
 # v 0.0.9 2026-09-29
+# - esphome/components/solis-modbus-inv-copy.yaml
 # - removed register_count 4 and resplaced with response_size: 8         # <--- Vervangt register_count (4 registers * 2 bytes = 8)
 # - changed register_count in rtc to hardcoded 6
 
@@ -72,6 +73,8 @@
 # - light: - platform: esp32_rmt_led_strip
 # - added channel_colors: GRB       # <--- Vervangt rgb_order (voorkomt waarschuwingen in de toekomst)
 # - removed rgb_order
+# - esphome/components/solis-modbus-inv-copy.yaml
+# -
 
 
 

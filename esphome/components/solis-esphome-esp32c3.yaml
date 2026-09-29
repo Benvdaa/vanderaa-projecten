@@ -68,6 +68,13 @@
 # - removed register_count 4 and resplaced with response_size: 8         # <--- Vervangt register_count (4 registers * 2 bytes = 8)
 # - changed register_count in rtc to hardcoded 6
 
+# v 0.0.10 2026-09-30
+# - light: - platform: esp32_rmt_led_strip
+# - added channel_colors: GRB       # <--- Vervangt rgb_order (voorkomt waarschuwingen in de toekomst)
+# - removed rgb_order
+
+
+
 substitutions:
   time_timezone: "Europe/Amsterdam"
   # vdate: "v 0.0.4 2026-04-22"
@@ -155,7 +162,8 @@ time:
 # ⬇ Enable SPI RGB Led  #--------------------- ⬇ #
 light:
   - platform: esp32_rmt_led_strip
-    rgb_order: GRB
+    channel_colors: GRB       # <--- Vervangt rgb_order (voorkomt waarschuwingen in de toekomst)
+    ## rgb_order: GRB
     pin: GPIO7
     num_leds: 1
     #rmt_channel: 0

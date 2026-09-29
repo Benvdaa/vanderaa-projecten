@@ -69,20 +69,21 @@
 # - removed register_count 4 and resplaced with response_size: 8         # <--- Vervangt register_count (4 registers * 2 bytes = 8)
 # - changed register_count in rtc to hardcoded 6
 
-# v 0.0.10 2026-09-30
+# v 0.0.10 2026-09-30 Changes for Esphome 2027.3.x
 # - light: - platform: esp32_rmt_led_strip
 # - added channel_colors: GRB       # <--- Vervangt rgb_order (voorkomt waarschuwingen in de toekomst)
 # - removed rgb_order
 # - esphome/components/solis-modbus-inv-copy.yaml
-# -
-
+#   skip_updates verwijderd
+# - changed: force_new_range vervangen met
+# - added reuse_previous_range: false 
 
 
 substitutions:
   time_timezone: "Europe/Amsterdam"
   # vdate: "v 0.0.4 2026-04-22"
-  project_version: "0.0.9" # From 22-04-2026 new version
-  date: "29-09-2026"
+  project_version: "0.0.10" # From 22-04-2026 new version
+  date: "30-09-2026"
   device_description: "${friendly_name} gemaakt door van der Aa versie: ${project_version} - date ${date}."
   name: solis-inverter
   friendly_name: Ginlong Solis Inverter

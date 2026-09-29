@@ -220,7 +220,7 @@ modbus_controller:
     address: ${solis_modbus_adress} #0x1
     modbus_id: modbus_hw
     setup_priority: -10
-    continuous: true
+    ##continuous: true
     update_interval: ${solis_modbus_update} # 20s default 60s  
   
 # ⬇ Button Configuration  ⬇ #
